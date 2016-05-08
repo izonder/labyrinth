@@ -3,11 +3,19 @@
   "version": "0.0.0",
   "private": true,
   "author": "izonder@gmail.com",
+  "engines": {
+    "node": "^4.1.2"
+  },
   "scripts": {
-    "run": "node ./src/app.js"
+    "app": "node ./src/app.js"
   },
   "dependencies": {
+    "body-parser": "^1.15.1",
+    "errorhandler": "^1.4.3",
     "express": "^4.13.4",
-    "mongodb": "^2.1.18"
+    "express-session": "^1.13.0",
+    "method-override": "^2.3.5",
+    "mongodb": "^2.1.18",
+    "serve-static": "^1.10.2"
   }
 }

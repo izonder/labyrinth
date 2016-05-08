@@ -1,1 +1,13 @@
-{}
+{
+  "core": {
+    "server": {
+      "port": 8080,
+      "timeout": 3000
+    },
+    "storage": {
+      "host": "localhost",
+      "port": 27017,
+      "db": "labyrinth"
+    }
+  }
+}
