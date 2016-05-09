@@ -9,5 +9,6 @@
       "port": 27017,
       "db": "labyrinth"
     }
-  }
+  },
+  "modules": ["users", "labyrinth"]
 }

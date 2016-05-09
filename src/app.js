@@ -7,6 +7,7 @@ var Container   = require('../core/container'),
 
 class Application {
     constructor() {
+        this.modules = new Map();
         this.container = Container;
 
         this.container.set('config', Config);
@@ -31,6 +32,15 @@ class Application {
     }
 
     startModules() {
+        for(let moduleName of this.container.get('config').modules || []) {
+            try {
+                let Module = require(`./${moduleName}/index`);
+                if(!this.modules.get(moduleName)) this.modules.set(moduleName, new Module(this.container));
+            }
+            catch(e) {
+                console.warn('[Application] Module not found:', moduleName);
+            }
+        }
         console.log('[Application] Modules started, ready!');
     }
 }
