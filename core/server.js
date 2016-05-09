@@ -6,6 +6,8 @@ var express         = require('express'),
     serveStatic     = require('serve-static'),
     errorHandler    = require('errorhandler');
 
+const overrideMethodHeader = 'X-HTTP-Method-Override';
+
 class Server {
     constructor(config) {
         this.config = config;
@@ -23,7 +25,9 @@ class Server {
                 }, this.config.timeout || 3000);
 
             //middleware
-            app.use(methodOverride());
+            app.use(methodOverride(overrideMethodHeader));
+            app.use(this.customMethodMiddleware(overrideMethodHeader)); //custom HTTP methods
+            app.use(this.corsMiddleware());
             app.use(bodyParser.json());
             app.use(serveStatic(this.public));
             app.use(errorHandler());
@@ -38,6 +42,22 @@ class Server {
 
     _getRoot() {
         return __dirname + '/../public';
+    }
+
+    customMethodMiddleware() {
+        return function(req, res, next) {
+            if(req.headers[overrideMethodHeader.toLocaleLowerCase()]) req.originalMethod = req.headers[overrideMethodHeader.toLocaleLowerCase()];
+            next();
+        }
+    }
+
+    corsMiddleware() {
+        return function(req, res, next) {
+            res.header('Access-Control-Allow-Origin', '*');
+            res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+            res.header('Access-Control-Allow-Headers', 'X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept');
+            next();
+        }
     }
 }
 
