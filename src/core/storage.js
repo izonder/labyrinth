@@ -3,8 +3,9 @@
 var MongoClient = require('mongodb').MongoClient;
 
 class Storage {
-    constructor(config) {
+    constructor(config, logger) {
         this.config = config || {};
+        this.logger = logger;
         this.dsn = this._getDsn();
 
         this.db = null;
@@ -15,11 +16,14 @@ class Storage {
             MongoClient.connect(this.dsn)
                 .then((db) => {
                     this.db = db;
-                    console.info('[Storage] MongoDB successfully connected');
+                    this.logger.info('[Storage] MongoDB successfully connected');
 
-                    resolve(this);
+                    resolve(this.db);
                 })
-                .catch((e) => reject(e));
+                .catch((e) => {
+                    this.logger.error('[Storage] MongoDB driver failed');
+                    reject(e);
+                });
         });
     }
 

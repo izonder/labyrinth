@@ -10,5 +10,10 @@
       "db": "labyrinth"
     }
   },
-  "modules": ["users", "labyrinth"]
+  "modules": ["common", "users", "labyrinth"],
+  "application": {
+    "strictPushMethod": true,
+    "labyrinthBoundX": 256,
+    "labyrinthBoundY": 256
+  }
 }
