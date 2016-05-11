@@ -214,7 +214,7 @@ class Labyrinth {
                 if(data) {
                     if(data.owner == userId) {
                         let labyrinth = new LabyrinthModel(boundX, boundY, data);
-                        labyrinth.setEndsCoord(x, y, end);
+                        labyrinth.setCoords(x, y, end);
 
                         //save changes
                         this.helper.updateLabyrinth(id, labyrinth.serialize(), (e, r) => {
