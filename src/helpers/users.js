@@ -3,6 +3,10 @@
 var Sequence = require('./sequence');
 
 class Users {
+    /**
+     * Users helper
+     * @param storage
+     */
     constructor(storage) {
         this.storage = storage;
         this.key = 'users';
@@ -11,6 +15,12 @@ class Users {
         this.sequence.ensureSequenceIndex(this.key);
     }
 
+    /**
+     * Get user object
+     * @param name
+     * @param pw
+     * @param cb(error, user)
+     */
     users(name, pw, cb) {
         let query = {
             name: name,
@@ -24,6 +34,12 @@ class Users {
             .next(cb);
     }
 
+    /**
+     * Create new unique user
+     * @param name
+     * @param pw
+     * @param cb(error, id)
+     */
     createUser(name, pw, cb) {
         let query = {
             name: name
@@ -37,7 +53,7 @@ class Users {
             .hasNext((e, exists) => {
                 if(!e && !exists) {
                     //get the sequence ID
-                    this.sequence.getSequenceId(this.key, (e, id) => {console.log('***', e, id);
+                    this.sequence.getSequenceId(this.key, (e, id) => {
                         if(!e) {
                             let obj = {
                                 id: id,

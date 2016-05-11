@@ -3,6 +3,11 @@
 var MongoClient = require('mongodb').MongoClient;
 
 class Storage {
+    /**
+     * MongoDB storage driver
+     * @param config
+     * @param logger
+     */
     constructor(config, logger) {
         this.config = config || {};
         this.logger = logger;
@@ -11,6 +16,10 @@ class Storage {
         this.db = null;
     }
 
+    /**
+     * Storage initialization
+     * @returns {Promise}
+     */
     init() {
         return new Promise((resolve, reject) => {
             MongoClient.connect(this.dsn)
@@ -27,6 +36,11 @@ class Storage {
         });
     }
 
+    /**
+     * DSN calculation
+     * @returns {string}
+     * @private
+     */
     _getDsn() {
         return [
             'mongodb://',

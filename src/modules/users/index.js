@@ -4,6 +4,10 @@ var auth = require('basic-auth'),
     UsersHelper = require('./../../helpers/users');
 
 class Users {
+    /**
+     * Users module
+     * @param container
+     */
     constructor(container) {
         this.container = container;
         this.helper = new UsersHelper(this.container.get('storage'));
@@ -12,6 +16,10 @@ class Users {
         app.use(this.basicAuthMiddleware()); //basic auth doesn't affect static because this middleware is later then the static middleware
     }
 
+    /**
+     * Basic Auth middleware
+     * @returns {function()}
+     */
     basicAuthMiddleware() {
         return (req, res, next) => {
             res.set('WWW-Authenticate', 'Basic realm="authorization"'); //set Basic Auth header
@@ -24,13 +32,13 @@ class Users {
                 this.helper.users(name, pw, (e, user) => { //search user
                     if(!e) {
                         if(user) {
-                            this.storeUserId(res, user.id);
+                            this._storeUserId(res, user.id);
                             next();
                         }
                         else {
                             this.helper.createUser(name, pw, (e, id) => { //create user on fly
                                 if(!e && id) {
-                                    this.storeUserId(res, id);
+                                    this._storeUserId(res, id);
                                     next();
                                 }
                                 else res.sendStatus(403); //credentials are incorrect, forbidden
@@ -44,7 +52,13 @@ class Users {
         };
     }
 
-    storeUserId(res, userId) {
+    /**
+     * Store userId in the request/response session
+     * @param res
+     * @param userId
+     * @private
+     */
+    _storeUserId(res, userId) {
         res.locals.userId = userId;
     }
 }

@@ -1,6 +1,10 @@
 'use strict';
 
 class Logger {
+    /**
+     * Fabric for logger methods
+     * @param logger
+     */
     constructor(logger) {
         this.logger = logger || console.log;
         this.methods = ['log', 'warn', 'info', 'error', 'debug'];

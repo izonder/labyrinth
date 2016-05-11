@@ -7,6 +7,9 @@ var Container   = require('./core/container'),
     Server      = require('./core/server');
 
 class Application {
+    /**
+     * Application constructor
+     */
     constructor() {
         this.modules = new Map();
         this.container = Container;
@@ -26,14 +29,21 @@ class Application {
             });
     }
 
-    run(result) {
-        this.container.set('storage', result[0]);
-        this.container.set('server', result[1]);
+    /**
+     * Bootstrap
+     * @param drivers
+     */
+    run(drivers) {
+        this.container.set('storage', drivers[0]);
+        this.container.set('server', drivers[1]);
 
         this.logger.info('[Application] All dependencies loaded');
         this.startModules();
     }
 
+    /**
+     * Module resolver
+     */
     startModules() {
         for(let moduleName of this.container.get('config').modules || []) {
             try {

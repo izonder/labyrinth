@@ -7,6 +7,11 @@ var express         = require('express'),
     errorHandler    = require('errorhandler');
 
 class Server {
+    /**
+     * HTTP server driver
+     * @param config
+     * @param logger
+     */
     constructor(config, logger) {
         this.config = config || {};
         this.logger = logger;
@@ -15,6 +20,10 @@ class Server {
         this.app = null;
     }
 
+    /**
+     * Server initialization
+     * @returns {Promise}
+     */
     init() {
         return new Promise((resolve, reject) => {
             var port = this.config.port || 80,
@@ -38,6 +47,11 @@ class Server {
         });
     }
 
+    /**
+     * Calculate root path for static
+     * @returns {string}
+     * @private
+     */
     _getRoot() {
         return __dirname + '/../../public';
     }

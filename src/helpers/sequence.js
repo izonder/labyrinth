@@ -1,10 +1,18 @@
 'use strict';
 
 class Sequence {
+    /**
+     * Sequence indexes adapter
+     * @param storage
+     */
     constructor(storage) {
         this.storage = storage;
     }
 
+    /**
+     * Build index
+     * @param key
+     */
     ensureSequenceIndex(key) {
         //todo: remove sequence ID (sequence is bad practice for distributed systems)
         let query = {
@@ -28,6 +36,11 @@ class Sequence {
             });
     }
 
+    /**
+     * Calculate index value
+     * @param key
+     * @param cb
+     */
     getSequenceId(key, cb) {
         let query = {
                 id: key

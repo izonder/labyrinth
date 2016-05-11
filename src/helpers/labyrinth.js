@@ -3,6 +3,10 @@
 var Sequence = require('./sequence');
 
 class Labyrinth {
+    /**
+     * Labyrinth helper
+     * @param storage
+     */
     constructor(storage) {
         this.storage = storage;
         this.key = 'labyrinth';
@@ -11,6 +15,11 @@ class Labyrinth {
         this.sequence.ensureSequenceIndex(this.key);
     }
 
+    /**
+     * Get labyrinths collection by userId
+     * @param userId
+     * @param cb(error, collection)
+     */
     getLabyrinths(userId, cb) {
         let query = {
             owner: userId
@@ -21,10 +30,15 @@ class Labyrinth {
             .find(query)
             .toArray(cb);
     }
-    
+
+    /**
+     * Get labyrinth item by ID
+     * @param id
+     * @param cb(error, item)
+     */
     getLabyrinth(id, cb) {
         let query = {
-            id: id
+            id: +id
         };
 
         this.storage
@@ -33,7 +47,13 @@ class Labyrinth {
             .limit(1)
             .next(cb);
     }
-    
+
+    /**
+     * Save new labyrinth document
+     * @param userId
+     * @param labyrinth
+     * @param cb(error, id)
+     */
     saveLabyrinth(userId, labyrinth, cb) {
         //get the sequence ID
         this.sequence.getSequenceId(this.key, (e, id) => {
@@ -51,10 +71,16 @@ class Labyrinth {
             else cb(e);
         });
     }
-    
+
+    /**
+     * Update labyrinth document by ID
+     * @param id
+     * @param labyrinth
+     * @param cb(error, result)
+     */
     updateLabyrinth(id, labyrinth, cb) {
         let query = {
-            id: id
+            id: +id
         };
 
         this.storage

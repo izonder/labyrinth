@@ -3,6 +3,10 @@
 const overrideMethodHeader = 'X-HTTP-Method-Override';
 
 class Common {
+    /**
+     * Common module
+     * @param container
+     */
     constructor(container) {
         this.container = container;
 
@@ -12,6 +16,11 @@ class Common {
         app.use(this.corsMiddleware());
     }
 
+    /**
+     * Middleware for custom HTTP methods
+     * @param method
+     * @returns {Function}
+     */
     customMethodMiddleware(method) {
         return function(req, res, next) {
             if(req.headers[method.toLocaleLowerCase()]) req.originalMethod = req.headers[method.toLocaleLowerCase()];
@@ -19,6 +28,10 @@ class Common {
         }
     }
 
+    /**
+     * CORS middleware
+     * @returns {Function}
+     */
     corsMiddleware() {
         return function(req, res, next) {
             res.header('Access-Control-Allow-Origin', '*');
