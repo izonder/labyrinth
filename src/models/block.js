@@ -8,8 +8,10 @@ class Block {
      * @param type
      */
     constructor(x, y, type) {
-        this.x = x;
-        this.y = y;
+        //convert to SMALL interger
+        this.x = +x | 0;
+        this.y = +y | 0;
+        
         this.type = type == 'blocked' ? 'blocked' : 'empty';
     }
 
