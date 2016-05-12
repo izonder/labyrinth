@@ -2,9 +2,9 @@
 
 ### Required
 
-Node.js: 4.3.0
-NPM: 2.14.12
-MongoDB: 3.2.1
+* Node.js: 4.3.0
+* NPM: 2.14.12
+* MongoDB: 3.2.1
 
 ### Deploy
 
