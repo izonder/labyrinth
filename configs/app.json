@@ -13,7 +13,7 @@
   "modules": ["common", "users", "labyrinth"],
   "application": {
     "strictPushMethod": true,
-    "labyrinthBoundX": 3,
-    "labyrinthBoundY": 3
+    "labyrinthBoundX": 256,
+    "labyrinthBoundY": 256
   }
 }
